@@ -25,7 +25,20 @@ export default {
       api_key: "fdf871cedaf3413c6a23230372c30a02",
       url_base: "https://api.openweathermap.org/data/2.5/",
       query: "",
-      weather: JSON.parse(localStorage.getItem("weather")),
+      weather: {
+        current: {
+          clouds: 0,
+          temp: 0,
+          uvi: 0,
+          wind_speed: 0,
+          weather: {
+            0: {
+              main: "",
+              icon: "",
+            },
+          },
+        },
+      },
       lat: localStorage.getItem("lat"),
       long: localStorage.getItem("long"),
       date: "",
@@ -49,6 +62,9 @@ export default {
           return res.json();
         })
         .then(this.setResults);
+    if (!localStorage.getItem("city")) {
+      this.$router.push({ name: "Home" });
+    }
   },
   methods: {
     b() {

@@ -47,7 +47,7 @@
           <img src="@/assets/pointblack.png" /> {{ city }}
         </div>
         <div class="col30 titletemp">
-          <img :src="`http://openweathermap.org/img/wn/${iconCloud}@2x.png`" />
+          <img :src="`https://openweathermap.org/img/wn/${iconCloud}@2x.png`" />
           {{ temp }}<sup>o</sup>
         </div>
         <div class="hr"></div>
@@ -106,7 +106,7 @@ export default {
     weather: [],
     locations: [
       {
-        name: JSON.parse(localStorage.getItem("weather")).name,
+        name: "",
         position: [localStorage.getItem("lat"), localStorage.getItem("long")],
       },
     ],
@@ -135,6 +135,9 @@ export default {
         return res.json();
       })
       .then(this.setResults);
+      if (!localStorage.getItem("city")) {
+        this.$router.push({ name: "Home" });
+      }
   },
   methods: {
     onMapClick(e) {
