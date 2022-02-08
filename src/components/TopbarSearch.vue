@@ -1,18 +1,12 @@
 <template>
-  <div class="topbar" :class="open === true ? 'whitefont' : ''">
-    <div v-if="open === true">
-      <img src="@/assets/backwhite.png" @click="$emit('togglenav')" />
-    </div>
-    <div v-else>
-      <img src="@/assets/menu.png" @click="$emit('togglenav')" />
-    </div>
+  <div class="topbar">
     <div>
-      {{ city }}
+      <router-link to="/MainPage">
+        <img src="@/assets/backblack.png" />
+      </router-link>
     </div>
-    <div v-if="open === true">
-      <img src="@/assets/setwhite.png" />
-    </div>
-    <div v-else>
+    <div>Change Location</div>
+    <div>
       <img src="@/assets/set.png" />
     </div>
   </div>
@@ -23,7 +17,7 @@ export default {
   props: ["open"],
   data: () => {
     return {
-      city: localStorage.getItem("city"),
+      navElements: ["user", "cogs", "th", "share-alt", "star", "comment"],
     };
   },
 };
@@ -35,9 +29,12 @@ export default {
   justify-content: space-between;
   height: 50px;
   padding: 10px 19px;
-  color: #363b64;
+  font-weight: 600;
   font-size: 16px;
   line-height: 24px;
+  text-align: center;
+  letter-spacing: 0.003em;
+  color: #363b64;
   .icon {
     cursor: pointer;
   }
@@ -47,7 +44,7 @@ export default {
     padding: 5px;
     margin-left: 10px;
     cursor: pointer;
-    color: #222;
+    color: #fff;
     background-color: #fff;
     border-radius: 50%;
   }

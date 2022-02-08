@@ -6,7 +6,7 @@
       </router-link>
     </div>
     <div>
-      Kec. Cimahi Tengah
+       {{city}}
     </div>
     <div>
       <img src="@/assets/dothorizontal.png"/>
@@ -22,9 +22,7 @@
     ],
     data: () => {
       return {
-        navElements: [
-          'user', 'cogs', 'th', 'share-alt', 'star', 'comment'
-        ]
+        city: localStorage.getItem('city'),
       }
     },
   }

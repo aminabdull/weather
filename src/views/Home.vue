@@ -1,76 +1,104 @@
 <template>
-  <div class="container bluelight hundredvh">    
+  <div class="container bluelight hundredvh">
     <div class="splashcontent verticalcenter">
-        <router-link
-          to="/MainPage"
-          v-if="next===true"
-        >
-          <img src="@/assets/cloud.png" />
-        </router-link>  
-        <div class="title" v-if="next===true">
-          Gerimis
-        </div>
-        <div class="description" v-if="next===true">
-          Dont worry about <br> the weather we all here <br> 
-          <span>Click Cloud Image To Go To The Next Page </span>
-        </div>
-        <div class="description" v-else>
-          Please Allow Geo Location on Browser
-        </div>
+      <router-link to="/MainPage" v-if="next === true">
+        <img src="@/assets/cloud.png" />
+      </router-link>
+      <div class="title" v-if="next === true">Gerimis</div>
+      <div class="description" v-if="next === true">
+        Dont worry about <br />
+        the weather we all here <br />
+        <span>Click Cloud Image To Go To The Next Page </span>
+      </div>
+      <div class="description" v-else>Please Allow Geo Location on Browser</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
-  data () {
+  name: "Home",
+  data() {
     return {
-      api_key: 'fdf871cedaf3413c6a23230372c30a02',
-      url_base: 'https://api.openweathermap.org/data/2.5/',
-      query: '',
+      api_key: "fdf871cedaf3413c6a23230372c30a02",
+      url_base: "https://api.openweathermap.org/data/2.5/",
+      query: "",
       weather: {},
-      lat: localStorage.getItem('lat'),
-      long: localStorage.getItem('long'),
-      next: false
-    }
+      lat: "",
+      long: "",
+      next: false,
+    };
   },
   mounted() {
-    this.lat = localStorage.getItem('lat');
-    this.long = localStorage.getItem('long');
-    this.query = 'lat=' + this.lat + '&lon=' + this.long ,
-    fetch(`${this.url_base}weather?${this.query}&units=metric&APPID=${this.api_key}`)
-          .then(res => {
-            return res.json();
-          }).then(this.setResults);
-          navigator.geolocation.getCurrentPosition(
-            position => {
-              localStorage.setItem('lat', position.coords.latitude)
-              localStorage.setItem('long', position.coords.longitude)
-              this.next = true;
-            },
-            error => {
-              console.log(error.message);
-            },
-          ) 
+    this.lat = localStorage.getItem("lat");
+    this.long = localStorage.getItem("long");
+    this.query = "lat=" + this.lat + "&lon=" + this.long;
+    fetch(
+      `${this.url_base}onecall?${this.query}&units=Imperial&APPID=${this.api_key}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then(this.setResults);
+    fetch(
+      `${this.url_base}weather?${this.query}&units=Imperial&APPID=${this.api_key}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then(this.setResults2);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        localStorage.setItem("lat", position.coords.latitude);
+        localStorage.setItem("long", position.coords.longitude);
+        this.next = true;
+      },
+      (error) => {
+        console.log(error.message);
+      }
+    );
   },
   methods: {
-    setResults (results) {
+    setResults(results) {
       this.weather = results;
-      localStorage.setItem('weather', JSON.stringify(results))
+      localStorage.setItem("weather", JSON.stringify(results));
     },
-    dateBuilder () {
+    setResults2(results) {
+      localStorage.setItem("city", results.name);
+    },
+    dateBuilder() {
       let d = new Date();
-      let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
       let day = days[d.getDay()];
       let date = d.getDate();
       let month = months[d.getMonth()];
       let year = d.getFullYear();
       return `${day} ${date} ${month} ${year}`;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 

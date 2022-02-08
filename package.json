@@ -13,11 +13,14 @@
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "@turf/distance": "^6.5.0",
     "core-js": "^3.6.5",
+    "leaflet": "^1.7.1",
     "vue": "^3.0.0",
     "vue-geolocation-api": "^0.1.21",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vue2-leaflet": "^2.7.1"
   },
   "devDependencies": {
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
